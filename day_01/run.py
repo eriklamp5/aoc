@@ -13,8 +13,8 @@ def map(line):
     return line
 
 def parse(baseline, debug = False):
-    # line = line.replace("zero", "0")
     vals = re.findall("(?=([1-9]|one|two|three|four|five|six|seven|eight|nine))", baseline)
+    # vals = re.findall("(?=([1-9]))", baseline)
     value = int(map(vals[0])) * 10 + int(map(vals[-1]))
     if debug:
         print(baseline + " " + str(value))
