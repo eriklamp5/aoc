@@ -1,30 +1,38 @@
-import re
 
-def map(line):
-    line = line.replace("one", "1")
-    line = line.replace("two", "2")
-    line = line.replace("three", "3")
-    line = line.replace("four", "4")
-    line = line.replace("five", "5")
-    line = line.replace("six", "6")
-    line = line.replace("seven", "7")
-    line = line.replace("eight", "8")
-    line = line.replace("nine", "9")
-    return line
 
-def parse(baseline, debug = False):
-    vals = re.findall("(?=([1-9]|one|two|three|four|five|six|seven|eight|nine))", baseline)
-    # vals = re.findall("(?=([1-9]))", baseline)
-    value = int(map(vals[0])) * 10 + int(map(vals[-1]))
-    if debug:
-        print(baseline + " " + str(value))
-    return value
 
-parse("twone", debug=True)
 
-filename = "day_01/input.txt"
-# filename = "day_01/example.txt"
+
+def partOne(left: list[int], right: list[int]):
+    left = sorted(left)
+    right = sorted(right)
+    both = [x for x in zip(left, right)]
+    sums = sum([abs(x[0] - x[1]) for x in both])
+    # print(left)
+    # print(right)
+    # print(both)
+    print(sums)
+
+
+def partTwo(left: list[int], right: list[int]):
+    rightCounts = {}
+    for i in right:
+        if i not in rightCounts:
+            rightCounts[i] = 0
+        rightCounts[i] += 1
+    sums = sum([x * rightCounts.get(x, 0) for x in left])
+    # print(left)
+    # print(right)
+    # print(rightCounts)
+    print(sums)
+
+
+filename = "2024/day_01/input.txt"
+# filename = "2024/day_01/example.txt"
 with open(filename) as file:
-    total = sum([parse(line.rstrip()) for line in file])
-    print(total)
+    left, right = zip(*[line.split("   ") for line in file])
+    left = [int(x.strip()) for x in left]
+    right = [int(x.strip()) for x in right]
+    # partOne(left, right)
+    partTwo(left, right)
 
